@@ -21,13 +21,15 @@ define(function(require, exports, module) {
     PageView.prototype.constructor = PageView;
 
     PageView.DEFAULT_OPTIONS = {
-        headerSize: 44
+        headerSize: 44,
+        appTitle: 'Famo.us ToDo App',
+        titleSize: 17 
     };
 
     function _createBacking() {
         var backing = new Surface({
             properties: {
-                backgroundColor: 'black',
+                backgroundColor: '#ff4444',
                 boxShadow: '0 0 20px rgba(0,0,0,0.5)'
             }
         });
@@ -50,7 +52,7 @@ define(function(require, exports, module) {
     function _createHeader() {
         var backgroundSurface = new Surface({
             properties: {
-                backgroundColor: 'black'
+                backgroundColor: '#ff4444'
             }
         });
 
@@ -59,14 +61,13 @@ define(function(require, exports, module) {
             content : 'img/hamburger.png'
         });
 
-        var searchSurface = new ImageSurface({
-            size: [232, 44],
-            content : 'img/search.png'
-        });
-
-        var iconSurface = new ImageSurface({
-            size: [44, 44],
-            content : 'img/icon.png'
+        this.titleSurface = new Surface({
+            size: [true, true],
+            content: this.options.appTitle,
+            properties: {
+                color: '#fff',
+                fontSize: this.options.titleSize + 'px'
+            }
         });
 
         var backgroundModifier = new StateModifier({
@@ -78,20 +79,15 @@ define(function(require, exports, module) {
             align : [0, 0.5]
         });
 
-        var searchModifier = new StateModifier({
+        var titleModifier = new StateModifier({
             origin: [0.5, 0.5],
-            align : [0.5, 0.5]
+            align: [0.5, 0.5]
         });
 
-        var iconModifier = new StateModifier({
-            origin: [1, 0.5],
-            align : [1, 0.5]
-        });
 
         this.layout.header.add(backgroundModifier).add(backgroundSurface);
         this.layout.header.add(hamburgerModifier).add(this.hamburgerSurface);
-        this.layout.header.add(searchModifier).add(searchSurface);
-        this.layout.header.add(iconModifier).add(iconSurface);
+        this.layout.header.add(titleModifier).add(this.titleSurface);
     }
 
     function _createBody() {

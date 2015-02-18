@@ -10,7 +10,6 @@ define(function(require, exports, module) {
         View.apply(this, arguments);
 
         _createBackground.call(this);
-        _createIcon.call(this);
         _createTitle.call(this);
     }
 
@@ -20,11 +19,9 @@ define(function(require, exports, module) {
     StripView.DEFAULT_OPTIONS = {
         // stripbackground size
         width: 320,
-        height: 55,
-        angle: -0.2,
-        iconSize: 32,
-        iconUrl: 'img/strip-icons/famous.png',
-        title: 'Famo.us',
+        height: 44,
+        angle: 0,
+        title: 'Tasks',
         fontSize: 25
     };
 
@@ -38,7 +35,7 @@ define(function(require, exports, module) {
         var background = new Surface({
             size: [this.options.width, this.options.height],
             properties: {
-                backgroundColor: '#222',
+                backgroundColor: '#ff4444',
                 boxShadow: '0 0 1px rgba(0,0,0,1)'
             }
         });
@@ -54,24 +51,6 @@ define(function(require, exports, module) {
         this.add(rotateModifier).add(skewModifier).add(background);
     }
 
-    // creating the icon
-    function _createIcon () {
-        var iconSurface = new ImageSurface({
-            size: [this.options.iconSize, this.options.iconSize],
-            content: 'this.options.iconUrl',
-            properties: {
-                pointerEvents: 'none'
-            }
-        });
-
-        var iconModifier = new StateModifier({
-            // place the icon in the proper position
-            transform: Transform.translate(24, 2, 0)    
-        });
-
-        this.add(iconModifier).add(iconSurface);
-    }
-
     function _createTitle () {
         var titleSurface = new Surface({
             size: [true, true],
@@ -79,7 +58,8 @@ define(function(require, exports, module) {
             properties: {
                 color: '#fff',
                 fontSize: this.options.fontSize + 'px',
-                pointerEvents: 'none'
+                pointerEvents: 'none',
+                lineHeight: '44px'
             }
         });
 
